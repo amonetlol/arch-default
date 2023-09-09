@@ -10,8 +10,8 @@ dir=$(pwd)
 source $dir/library.sh
 
 # Set color
-yellow="\e[33n]"
-reset_cor="\e[0n]"
+yellow="\e[33m]"
+reset_cor="\e[0m]"
 
 
 echo -e "${yellow}Atualizando chaves do Archlinux. ${reset_cor}"
