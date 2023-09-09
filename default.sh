@@ -101,6 +101,7 @@ while true; do
     case $sn in
         [Ss]* )
             echo "Instalando o SDDM."
+            sudo pacman -Sy glibc --noconfirm
             yay -S sddm-git --noconfirm
             sudo systemctl enable sddm.service
         break;;
