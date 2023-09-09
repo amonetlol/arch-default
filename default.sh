@@ -100,9 +100,10 @@ while true; do
     read -p "Deseja instalar o SDDM-Git? (Ss/Nn): " sn
     case $sn in
         [Ss]* )
-            echo "Instalando o SDDM."
+            echo -e "${yellow}Instalando o SDDM. ${reset_cor}"
             sudo pacman -Sy glibc --noconfirm
             yay -S sddm-git --noconfirm
+            echo -e "${yellow}Iniciando o serviço SDDM. ${reset_cor}"
             sudo systemctl enable sddm.service
         break;;
         [Nn]* ) 
@@ -117,7 +118,7 @@ while true; do
     read -p "Deseja instalar o Nemo? (Ss/Nn): " sn
     case $sn in
         [Ss]* )
-            echo "Instalando o Nemo."
+            echo -e "${yellow}Instalando o Nemo. ${reset_cor}"
             yay -S nemo nemo-emblems nemo-fileroller cinnamon-translations unrar unzip
         break;;
         [Nn]* ) 
@@ -132,7 +133,7 @@ while true; do
     read -p "Deseja instalar o Qtile? (Ss/Nn): " sn
     case $sn in
         [Ss]* )
-            echo "Instalando o Qtile."
+            echo -e "${yellow}Instalando o Qtile. ${reset_cor}"
             sudo pacman -S - < $dir/qtile.txt
         break;;
         [Nn]* ) 
@@ -147,7 +148,7 @@ while true; do
     read -p "Deseja instalar o Hyprland? (Ss/Nn): " sn
     case $sn in
         [Ss]* )
-            echo "Instalando o Hyprland."
+            echo -e "${yellow}Instalando o Hyprland. ${reset_cor}"
             sudo pacman -S - < $dir/hyprland.txt
         break;;
         [Nn]* ) 
