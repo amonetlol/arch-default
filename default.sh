@@ -9,14 +9,22 @@ exec > >(tee -a "$log_file") 2>&1
 dir=$(pwd)
 source $dir/library.sh
 
+# Set color
+yellow="\e[33n]"
+reset_cor="\e[0n]"
+
+
+echo -e "${yellow}Atualizando chaves do Archlinux. ${reset_cor}"
+sudo pacman -Sy archlinux-keyring --noconfirm
+
 # ---- Yay ---- #
 if sudo pacman -Qs git > /dev/null ; then
-    echo "Git está instalado."
+    echo -e "${yellow}Git está instalado. ${reset_cor}"
 else
     echo "Instalando o git!"
     sudo pacman -Sy git --noconfirm
     clear
-    echo "Yay instalado com sucesso!"
+    echo -e "${yellow}Git instalado com sucesso! ${reset_cor}"
 fi
 
 # ---- Yay ---- #
@@ -25,7 +33,8 @@ if sudo pacman -Qs yay > /dev/null ; then
 else
     echo "Instalando o yay!"
     sudo pacman -Sy go
-    git clone https://aur.archlinux.org/yay-git.git
+    #git clone https://aur.archlinux.org/yay-git.git
+    git clone https://aur.archlinux.org/yay-bin.git
     cd $dir/yay-git
     makepkg -si
     clear
@@ -76,6 +85,7 @@ while true; do
         [Ss]* )
             echo "Instalando os drivers do VMware."
             sudo pacman -Sy open-vm-tools xf86-input-vmmouse xf86-video-vmware gtkmm3 fuse2 --noconfirm
+            echo -e "${yellow}Iniciando o serviço vmtoolsd. ${reset_cor}"
             sudo systemctl enable vmtoolsd.service
         break;;
         [Nn]* ) 
