@@ -1,0 +1,101 @@
+#!/bin/sh
+
+# ---- Yay ---- #
+if sudo pacman -Qs yay > /dev/null ; then
+    echo "Yay está instalado."
+else
+    echo "Instalando o yay!"
+    git clone https://aur.archlinux.org/yay-git.git ~/yay-git
+    cd ~/yay-git
+    makepkg -si
+    clear
+    echo "Yay instalado com sucesso!"
+fi
+
+# ---- Instalado pacotes padrõese ---- #
+echo "Instalando."
+
+packagesPacman=(
+  "neovim"
+  "git"
+  "ttf-cascadia-code-nerd"
+  "ttf-roboto"
+  "ttf-hack-nerd"
+  "ttf-firacode-nerd"
+  "ttf-fantasque-nerd"
+  "ttf-fantasque-sans-mono"
+  "ttf-font-awesome"
+  "ttf-jetbrains-mono"
+  "ttf-jetbrains-mono-nerd"
+  "ttf-ubuntu-font-family"
+  "adobe-source-sans-fonts"
+  "evince"
+  "gvfs"
+  "ranger"
+  "viewnior"
+  "xdg-user-dirs"
+);
+
+packagesYay=(
+  "exa"
+  "google-chrome"
+  "otf-raleway"
+  "pfetch"
+  "ttf-intel-one-mono"
+  "ttf-iosevka"
+  "awesome-terminal-fonts"
+);
+
+_installPackagesPacman "${packagesPacman[@]}";
+_installPackagesYay "${packagesYay[@]}";
+
+# ---- VMware ---- #
+while true; do
+    read -p "Deseja instalar os drivers do VMware? (Ss/Nn): " sn
+    case $sn in
+        [Ss]* )
+            echo "Instalando os drivers do VMware."
+            sudo pacman -Sy open-vm-tools xf86-input-vmmouse xf86-video-vmware gtkmm3 fuse2 --noconfirm
+            sudo systemctl enable vmtoolsd.service
+        break;;
+        [Nn]* ) 
+            exit;
+        break;;
+        * ) echo "Sim ou não.";;
+    esac
+done
+
+# ---- SDDM ---- #
+while true; do
+    read -p "Deseja instalar o SDDM-Git? (Ss/Nn): " sn
+    case $sn in
+        [Ss]* )
+            echo "Instalando o SDDM."
+            yay -S sddm-git --noconfirm
+            sudo systemctl enable sddm.service
+        break;;
+        [Nn]* ) 
+            exit;
+        break;;
+        * ) echo "Sim ou não.";;
+    esac
+done
+
+# ---- Nemo ---- #
+while true; do
+    read -p "Deseja instalar o Nemo? (Ss/Nn): " sn
+    case $sn in
+        [Ss]* )
+            echo "Instalando o Nemo."
+            yay -S nemo nemo-emblems nemo-fileroller cinnamon-translations unrar unzip
+        break;;
+        [Nn]* ) 
+            exit;
+        break;;
+        * ) echo "Sim ou não.";;
+    esac
+done
+
+
+
+
