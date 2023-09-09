@@ -1,4 +1,5 @@
 #!/bin/sh
+source $(dirname "$0")/library.sh
 
 # ---- Yay ---- #
 if sudo pacman -Qs yay > /dev/null ; then
