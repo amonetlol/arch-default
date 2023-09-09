@@ -35,7 +35,7 @@ else
     sudo pacman -Sy go
     #git clone https://aur.archlinux.org/yay-git.git
     git clone https://aur.archlinux.org/yay-bin.git
-    cd $dir/yay-git
+    cd $dir/yay-bin
     makepkg -si
     clear
     echo "Yay instalado com sucesso!"
