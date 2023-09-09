@@ -4,12 +4,22 @@ dir=$(pwd)
 source $dir/library.sh
 
 # ---- Yay ---- #
+if sudo pacman -Qs git > /dev/null ; then
+    echo "Git está instalado."
+else
+    echo "Instalando o git!"
+    sudo pacman -Sy git --noconfirm
+    clear
+    echo "Yay instalado com sucesso!"
+fi
+
+# ---- Yay ---- #
 if sudo pacman -Qs yay > /dev/null ; then
     echo "Yay está instalado."
 else
     echo "Instalando o yay!"
     git clone https://aur.archlinux.org/yay-git.git ~/yay-git
-    cd ~/yay-git
+    cd yay-git
     makepkg -si
     clear
     echo "Yay instalado com sucesso!"
@@ -20,7 +30,6 @@ echo "Instalando."
 
 packagesPacman=(
   "neovim"
-  "git"
   "ttf-cascadia-code-nerd"
   "ttf-roboto"
   "ttf-hack-nerd"
@@ -37,6 +46,7 @@ packagesPacman=(
   "ranger"
   "viewnior"
   "xdg-user-dirs"
+  "wget"
 );
 
 packagesYay=(
