@@ -29,20 +29,20 @@ fi
 
 # ---- Yay ---- #
 if sudo pacman -Qs yay > /dev/null ; then
-    echo "Yay está instalado."
+    echo -e "${yellow}Yay está instalado. ${reset_cor}"
 else
-    echo "Instalando o yay!"
+    echo -e "${yellow}Instalando o yay! ${reset_cor}"
     sudo pacman -Sy go
     #git clone https://aur.archlinux.org/yay-git.git
     git clone https://aur.archlinux.org/yay-bin.git
     cd $dir/yay-bin
     makepkg -si
     clear
-    echo "Yay instalado com sucesso!"
+    echo -e "${yellow}Yay instalado com sucesso! ${reset_cor}"
 fi
 
 # ---- Instalado pacotes padrõese ---- #
-echo "Instalando."
+echo -e "${yellow}Instalando os pacotes. ${reset_cor}"
 
 packagesPacman=(
   "neovim"
@@ -83,7 +83,7 @@ while true; do
     read -p "Deseja instalar os drivers do VMware? (Ss/Nn): " sn
     case $sn in
         [Ss]* )
-            echo "Instalando os drivers do VMware."
+            echo -e "{yellow}Instalando os drivers do VMware. ${reset_cor}"
             sudo pacman -Sy open-vm-tools xf86-input-vmmouse xf86-video-vmware gtkmm3 fuse2 --noconfirm
             echo -e "${yellow}Iniciando o serviço vmtoolsd. ${reset_cor}"
             sudo systemctl enable vmtoolsd.service
