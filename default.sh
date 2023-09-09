@@ -1,5 +1,7 @@
 #!/bin/sh
-source $(dirname "$0")/library.sh
+#source $(dirname "$0")/library.sh
+dir=$(pwd)
+source $dir/library.sh
 
 # ---- Yay ---- #
 if sudo pacman -Qs yay > /dev/null ; then
@@ -89,6 +91,36 @@ while true; do
         [Ss]* )
             echo "Instalando o Nemo."
             yay -S nemo nemo-emblems nemo-fileroller cinnamon-translations unrar unzip
+        break;;
+        [Nn]* ) 
+            exit;
+        break;;
+        * ) echo "Sim ou não.";;
+    esac
+done
+
+# ---- Qtile ---- #
+while true; do
+    read -p "Deseja instalar o Qtile? (Ss/Nn): " sn
+    case $sn in
+        [Ss]* )
+            echo "Instalando o Qtile."
+            sudo pacman -S - < $dir/qtile.txt
+        break;;
+        [Nn]* ) 
+            exit;
+        break;;
+        * ) echo "Sim ou não.";;
+    esac
+done
+
+# ---- Hyprland ---- #
+while true; do
+    read -p "Deseja instalar o Hyprland? (Ss/Nn): " sn
+    case $sn in
+        [Ss]* )
+            echo "Instalando o Hyprland."
+            sudo pacman -S - < $dir/hyprland.txt
         break;;
         [Nn]* ) 
             exit;
