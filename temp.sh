@@ -7,11 +7,12 @@ else
 		read -p "Deseja instalar o htop (Ss/Nn): " sn
 		case $sn in
 		[Ss]*)
+			echo
 			echo "htop."
 			echo $'\n'
-			sudo pacman -Sy htop --noconfirm
-			echo "Sucesso"
-			echo $'\n'
+			sudo pacman --noconfirm -Sy htop
+			#echo "Sucesso"
+			#echo $'\n'
 			break
 			;;
 		[Nn]*)
@@ -21,4 +22,10 @@ else
 		*) echo "Sim ou não." ;;
 		esac
 	done
+
+	if [ $? -eq 0 ]; then
+		echo "O htop foi instalado com sucesso!"
+	else
+		echo "Erro na instalação do htop."
+	fi
 fi
