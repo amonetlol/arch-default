@@ -24,6 +24,7 @@ if sudo pacman -Qs yay > /dev/null ; then
     echo "Yay está instalado."
 else
     echo "Instalando o yay!"
+    sudo pacman -Sy go
     git clone https://aur.archlinux.org/yay-git.git
     cd $dir/yay-git
     makepkg -si
