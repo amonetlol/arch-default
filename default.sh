@@ -1,5 +1,11 @@
 #!/bin/sh
 #source $(dirname "$0")/library.sh
+# Nome do arquivo de log
+log_file="default.log"
+
+# Redireciona a saída padrão e a saída de erro padrão para o arquivo de log
+exec > >(tee -a "$log_file") 2>&1
+
 dir=$(pwd)
 source $dir/library.sh
 
