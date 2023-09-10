@@ -73,6 +73,7 @@ packagesPacman=(
   "viewnior"
   "xdg-user-dirs"
   "wget"
+  "udisks2"
 );
 
 packagesYay=(
