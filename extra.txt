@@ -54,4 +54,5 @@ volumeicon
 zsh
 zsh-autosuggestions
 zsh-history-substring-search
+preload
 
