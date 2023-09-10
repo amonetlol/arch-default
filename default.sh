@@ -114,7 +114,6 @@ while true; do
         [Ss]* )
             echo -e "${yellow}Instalando o SDDM. ${reset_cor}"
             echo $'\n'
-            sudo pacman -Sy glibc --noconfirm
             yay -S sddm-git --noconfirm
             echo -e "${yellow}Iniciando o serviço SDDM. ${reset_cor}"
             echo $'\n'
