@@ -1,3 +1,5 @@
+evince
+viewnior
 pacman-updated-hook
 net-tools
 inxi

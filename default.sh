@@ -56,21 +56,8 @@ echo $'\n'
 
 packagesPacman=(
   "neovim"
-  "ttf-cascadia-code-nerd"
-  "ttf-roboto"
-  "ttf-hack-nerd"
-  "ttf-firacode-nerd"
-  "ttf-fantasque-nerd"
-  "ttf-fantasque-sans-mono"
-  "ttf-font-awesome"
-  "ttf-jetbrains-mono"
-  "ttf-jetbrains-mono-nerd"
-  "ttf-ubuntu-font-family"
-  "adobe-source-sans-fonts"
-  "evince"
   "gvfs"
   "ranger"
-  "viewnior"
   "xdg-user-dirs"
   "wget"
   "udisks2"
@@ -79,12 +66,8 @@ packagesPacman=(
 packagesYay=(
   "exa"
   "google-chrome"
-  "otf-raleway"
   "pfetch"
-  "ttf-intel-one-mono"
-  "ttf-iosevka"
-  "awesome-terminal-fonts"
-);
+  );
 
 _installPackagesPacman "${packagesPacman[@]}";
 _installPackagesYay "${packagesYay[@]}";
