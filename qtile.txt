@@ -20,7 +20,7 @@ lxappearance
 feh
 dunst
 xdotool
-main
+maim
 xcolor
 gthumb
 flameshot
