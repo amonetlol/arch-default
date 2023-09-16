@@ -1,5 +1,14 @@
 #!/bin/sh
 
+dir=$(pwd)
+CONFIGS_DIR=$dir/configs/
+
+# Nome do arquivo de log
+log_file="arch-chroot.log"
+
+# Redireciona a saída padrão e a saída de erro padrão para o arquivo de log
+exec > >(tee -a "$log_file") 2>&1
+
 echo -ne "
 -------------------------------------------------------------------------
                     GRUB BIOS Bootloader Install & Check
