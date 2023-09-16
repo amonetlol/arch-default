@@ -149,7 +149,8 @@ echo -ne "
 "
 # reflector -a 48 -c $iso -f 5 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
 rm /etc/pacman.d/mirrorlist
-echo "Server = https://mirror.ufscar.br/archlinux/$repo/os/$arch" > /etc/pacman.d/mirrorlist
+mirror_url="https://mirror.ufscar.br/archlinux/\$repo/os/\$arch"
+echo "Server = $mirror_url" > /etc/pacman.d/mirrorlist
 mkdir /mnt &>/dev/null # Hiding error message if any
 echo -ne "
 -------------------------------------------------------------------------
