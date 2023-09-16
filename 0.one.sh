@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 dir=$(pwd) 
 CONFIGS_DIR=$dir/configs/
