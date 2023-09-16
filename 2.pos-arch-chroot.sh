@@ -367,9 +367,10 @@ pacman -S grub efibootmgr --noconfirm --needed
 
 
 if [[ -d "/sys/firmware/efi" ]]; then
-    grub-install --target=i386-pc --recheck /dev/sda1
+    #grub-install --target=x86_64-efi --efi-directory=/boot/efi
+    grub-install --target=x86_64-efi --efi-directory=/boot     
 else
-    grub-install --target=x86_64-efi --efi-directory=/boot/efi
+    grub-install --target=i386-pc --recheck /dev/sda1
 fi
 
 grub-mkconfig -o /boot/grub/grub.cfg

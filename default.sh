@@ -13,6 +13,8 @@ source $dir/library.sh
 yellow="\e[1;33m]"
 reset_cor="\e[0m]"
 
+setfont ter-v22b
+
 echo -e "${yellow}--------------------------------------------${reset_cor}"
 echo $'\n'
 echo -e "${yellow}Atualizando chaves do Archlinux. ${reset_cor}"
