@@ -234,6 +234,20 @@ elif grep -E "VMware SVGA II Adapter" <<< ${gpu_type}; then
     systemctl enable vmtoolsd.service
 fi
 
+set_password() {
+    read -rs -p "Please enter password: " PASSWORD1
+    echo -ne "\n"
+    read -rs -p "Please re-enter password: " PASSWORD2
+    echo -ne "\n"
+    if [[ "$PASSWORD1" == "$PASSWORD2" ]]; then
+        set_option "$1" "$PASSWORD1"
+    else
+        echo -ne "ERROR! Passwords do not match. \n"
+        set_password
+    fi
+}
+
+
 # @description Gather username and password to be used for installation. 
 userinfo () {
 read -p "Please enter your username: " username
@@ -354,7 +368,7 @@ pacman -S grub efibootmgr --noconfirm --needed
 
 if [[ -d "/sys/firmware/efi" ]]; then
     grub-install --target=i386-pc --recheck /dev/sda1
-elseif
+else
     grub-install --target=x86_64-efi --efi-directory=/boot/efi
 fi
 
