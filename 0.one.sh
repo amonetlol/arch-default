@@ -322,7 +322,8 @@ echo -ne "
 "
 pacstrap /mnt base base-devel linux linux-firmware vim sudo archlinux-keyring wget libnewt --noconfirm --needed
 echo "keyserver hkp://keyserver.ubuntu.com" >> /mnt/etc/pacman.d/gnupg/gpg.conf
-cp -R $dir /mnt/root/.src/arch-default
+mkdir -p /mnt/root/tmp/.src
+cp -R $dir /mnt/root/tmp/.src/arch-default
 cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
 
 genfstab -L /mnt >> /mnt/etc/fstab
