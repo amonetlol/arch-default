@@ -124,7 +124,7 @@ select_option() {
     return $(( $active_col + $active_row * $colmax ))
 }
 
-pacman -S --noconfirm --needed pacman-contrib terminus-font
+pacman -S --noconfirm --needed pacman-contrib terminus-font reflector rsync arch-install-scripts curl
 setfont ter-v22b
 sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 10/' /etc/pacman.conf
 
@@ -158,14 +158,12 @@ echo -ne "
 "
 pacman -S --noconfirm --needed networkmanager dhclient
 systemctl enable --now NetworkManager
-echo -ne "
--------------------------------------------------------------------------
-                    Setting up mirrors for optimal download 
--------------------------------------------------------------------------
-"
-pacman -S --noconfirm --needed pacman-contrib curl
-pacman -S --noconfirm --needed reflector rsync arch-install-scripts git
-cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
+# echo -ne "
+# -------------------------------------------------------------------------
+#                     Setting up mirrors for optimal download 
+# -------------------------------------------------------------------------
+# "
+# cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 
 # nc=$(grep -c ^processor /proc/cpuinfo)
 # echo -ne "
