@@ -227,4 +227,4 @@ echo -ne "
                    Arch-Chroot
 -------------------------------------------------------------------------
 "
-arch-chroot /mnt
+arch-chroot /mnt /usr/bin/bash
