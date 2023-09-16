@@ -137,7 +137,7 @@ select_option() {
     local offset=$(( $cols / $colmax ))
 
     local size=$4
-    shift 4
+    #shift 4
 
     # ensure cursor and input echoing back on upon a ctrl+c during read -s
     trap "cursor_blink_on; stty echo; printf '\n'; exit" 2
@@ -235,4 +235,4 @@ clear
 filesystem
 clear
 
-1.formatting.sh
+$dir/1.formatting.sh

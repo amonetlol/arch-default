@@ -160,4 +160,4 @@ logo
 userinfo
 clear
 
-4.set-user.sh
+$dir/4.set-user.sh

@@ -233,4 +233,4 @@ elif grep -E "VMware SVGA II Adapter" <<< ${gpu_type}; then
     systemctl enable vmtoolsd.service
 fi
 
-3.userinfo.sh
+$dir/3.userinfo.sh

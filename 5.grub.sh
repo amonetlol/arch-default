@@ -1,5 +1,7 @@
 #!/bin/sh
 
+dir=$(pwd) 
+
 # Nome do arquivo de log
 log_file="5.log"
 
@@ -19,6 +21,6 @@ fi
 
 grub-mkconfig -o /boot/grub/grub.cfg
 
-6.finish.sh
+$dir/6.finish.sh
 
 
