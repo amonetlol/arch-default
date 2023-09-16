@@ -136,8 +136,8 @@ Setting up mirrors for optimal download
 source $CONFIGS_DIR/setup.conf
 iso=$(curl -4 ifconfig.co/country-iso)
 timedatectl set-ntp true
-pacman -Sy --noconfirm archlinux-keyring #update keyrings to latest to prevent packages failing to install
-pacman -S --noconfirm --needed pacman-contrib terminus-font
+pacman -S --noconfirm archlinux-keyring #update keyrings to latest to prevent packages failing to install
+pacman -S --noconfirm --needed pacman-contrib rsync terminus-font
 setfont ter-v22b
 sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 10/' /etc/pacman.conf
 pacman -S --noconfirm --needed reflector rsync grub
