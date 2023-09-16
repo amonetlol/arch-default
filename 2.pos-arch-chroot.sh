@@ -136,25 +136,6 @@ pacman -S --noconfirm --needed pacman-contrib terminus-font
 setfont ter-v22b
 sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 10/' /etc/pacman.conf
 
-echo -ne "Setting Timezone"
-
-# Installation guide, Installation, Configure the system, Time zone
-ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
-
-echo -ne "Setting Locale and Keymap"
-
-sed -i 's/^en_US.UTF-8 UTF-8/#en_US.UTF-8 UTF-8/' /etc/locale.gen
-sed -i 's/^#pt_BR.UTF-8 UTF-8/pt_BR.UTF-8 UTF-8/' /etc/locale.gen
-locale-gen
-timedatectl --no-ask-password set-ntp 1
-localectl --no-ask-password set-locale LANG="pt_BR.UTF-8" LC_TIME="pt_BR.UTF-8"
-# Set keymaps
-echo 'KEYMAP=br-abnt2
-XKBLAYOUT=br
-XKBMODEL=abnt2
-XKBOPTIONS=terminate:ctrl_alt_bksp' | tee /etc/vsconsole.conf >/dev/null
-localectl --no-ask-password set-x11-keymap br abnt2
-
 echo -ne "
 -------------------------------------------------------------------------
                     Network Setup 
@@ -334,6 +315,25 @@ if [ $(whoami) = "root"  ]; then
 else
 	echo "You are already a user proceed with aur installs"
 fi
+
+echo -ne "Setting Timezone"
+
+# Installation guide, Installation, Configure the system, Time zone
+ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
+
+echo -ne "Setting Locale and Keymap"
+
+sed -i 's/^en_US.UTF-8 UTF-8/#en_US.UTF-8 UTF-8/' /etc/locale.gen
+sed -i 's/^#pt_BR.UTF-8 UTF-8/pt_BR.UTF-8 UTF-8/' /etc/locale.gen
+locale-gen
+timedatectl --no-ask-password set-ntp 1
+localectl --no-ask-password set-locale LANG="pt_BR.UTF-8" LC_TIME="pt_BR.UTF-8"
+# Set keymaps
+echo 'KEYMAP=br-abnt2
+XKBLAYOUT=br
+XKBMODEL=abnt2
+XKBOPTIONS=terminate:ctrl_alt_bksp' | tee /etc/vsconsole.conf >/dev/null
+localectl --no-ask-password set-x11-keymap br abnt2
 
 echo -ne "
 -------------------------------------------------------------------------
