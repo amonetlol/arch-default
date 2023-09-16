@@ -8,6 +8,7 @@ xorg-xinit
 base-devel
 libx11
 libxft
+ntp
 libxinerama
 freetype2
 binutils

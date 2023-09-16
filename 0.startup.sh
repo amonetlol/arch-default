@@ -327,3 +327,5 @@ timezone
 clear
 logo
 
+# chamando o script para instalar
+$dir/1.install.sh

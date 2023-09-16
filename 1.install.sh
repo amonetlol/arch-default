@@ -162,6 +162,7 @@ echo -ne "
                     Setup Language to BR and set locale  
 -------------------------------------------------------------------------
 "
+sed -i 's/^en_US.UTF-8 UTF-8/#en_US.UTF-8 UTF-8/' /etc/locale.gen
 sed -i 's/^#pt_BR.UTF-8 UTF-8/pt_BR.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
 timedatectl --no-ask-password set-timezone ${TIMEZONE}
@@ -170,6 +171,7 @@ localectl --no-ask-password set-locale LANG="pt_BR.UTF-8" LC_TIME="pt_BR.UTF-8"
 ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime
 # Set keymaps
 localectl --no-ask-password set-keymap br abnt2
+localectl --no-ask-password set-x11-keymap br abnt2
 
 # Add sudo no password rights
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
@@ -287,15 +289,11 @@ else
 	echo "You are already a user proceed with aur installs"
 fi
 
-# making mkinitcpio with linux kernel
-    mkinitcpio -p linux
-fi
-
 echo -ne "
 Final Setup and Configurations
 GRUB EFI Bootloader Install & Check
 "
-source ${HOME}/ArchTitus/configs/setup.conf
+source $dir/configs/setup.conf
 
 if [[ -d "/sys/firmware/efi" ]]; then
     grub-install --efi-directory=/boot ${DISK}
@@ -310,6 +308,9 @@ echo -ne "
                     Enabling Essential Services
 -------------------------------------------------------------------------
 "
+ntpd -qg
+systemctl enable ntpd.service
+echo "  NTP enabled"
 systemctl disable dhcpcd.service
 echo "  DHCP disabled"
 systemctl stop dhcpcd.service
