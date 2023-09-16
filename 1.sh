@@ -229,4 +229,4 @@ echo -ne "
                    Arch-Chroot
 -------------------------------------------------------------------------
 "
-arch-chroot /mnt /usr/bin/bash
+arch-chroot /mnt
