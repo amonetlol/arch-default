@@ -15,6 +15,12 @@ if [ ! -f $CONFIG_FILE ]; then # check if file exists
     touch -f $CONFIG_FILE # create file if not exists
 fi
 
+# Nome do arquivo de log
+log_file="startup.log"
+
+# Redireciona a saída padrão e a saída de erro padrão para o arquivo de log
+exec > >(tee -a "$log_file") 2>&1
+
 # @description set options in setup.conf
 # @arg $1 string Configuration variable.
 # @arg $2 string Configuration value.

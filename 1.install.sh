@@ -3,6 +3,12 @@
 dir=$(pwd)
 CONFIGS_DIR=$dir/configs/
 
+# Nome do arquivo de log
+log_file="install.log"
+
+# Redireciona a saída padrão e a saída de erro padrão para o arquivo de log
+exec > >(tee -a "$log_file") 2>&1
+
 echo -ne "
 
 -------------------------------------------------------------------------
@@ -17,7 +23,7 @@ timedatectl set-ntp true
 pacman -S --noconfirm archlinux-keyring #update keyrings to latest to prevent packages failing to install
 pacman -S --noconfirm --needed pacman-contrib terminus-font
 setfont ter-v22b
-sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
+sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 10/' /etc/pacman.conf
 pacman -S --noconfirm --needed reflector rsync grub
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 echo -ne "
@@ -107,6 +113,7 @@ if [[ ! -d "/sys/firmware/efi" ]]; then
     grub-install --boot-directory=/mnt/boot ${DISK}
 else
     pacstrap /mnt efibootmgr --noconfirm --needed
+    grub-install --target=x86_64-efi --efi-directory=/mnt/boot/efi --bootloader-id=grub
 fi
 
 # echo -ne "
@@ -171,7 +178,6 @@ localectl --no-ask-password set-locale LANG="pt_BR.UTF-8" LC_TIME="pt_BR.UTF-8"
 ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime
 # Set keymaps
 localectl --no-ask-password set-keymap br abnt2
-localectl --no-ask-password set-x11-keymap br abnt2
 
 # Add sudo no password rights
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
