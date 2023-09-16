@@ -124,17 +124,32 @@ select_option() {
     return $(( $active_col + $active_row * $colmax ))
 }
 
-echo -ne "
-
--------------------------------------------------------------------------
-                    Setting: timezone | locale | keymap | hostname
--------------------------------------------------------------------------
-
-Setfont 22
-"
 pacman -S --noconfirm --needed pacman-contrib terminus-font
 setfont ter-v22b
 sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 10/' /etc/pacman.conf
+
+echo -ne "
+-------------------------------------------------------------------------
+                    Setting: Timezone - Locale - Keymap
+-------------------------------------------------------------------------
+"
+
+# Installation guide, Installation, Configure the system, Time zone
+ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
+
+echo -ne "Setting Locale and Keymap"
+
+sed -i 's/^en_US.UTF-8 UTF-8/#en_US.UTF-8 UTF-8/' /etc/locale.gen
+sed -i 's/^#pt_BR.UTF-8 UTF-8/pt_BR.UTF-8 UTF-8/' /etc/locale.gen
+locale-gen
+timedatectl --no-ask-password set-ntp 1
+localectl --no-ask-password set-locale LANG="pt_BR.UTF-8" LC_TIME="pt_BR.UTF-8"
+# Set keymaps
+echo 'KEYMAP=br-abnt2
+XKBLAYOUT=br
+XKBMODEL=abnt2
+XKBOPTIONS=terminate:ctrl_alt_bksp' | tee /etc/vsconsole.conf >/dev/null
+localectl --no-ask-password set-x11-keymap br abnt2
 
 echo -ne "
 -------------------------------------------------------------------------
@@ -316,25 +331,6 @@ else
 	echo "You are already a user proceed with aur installs"
 fi
 
-echo -ne "Setting Timezone"
-
-# Installation guide, Installation, Configure the system, Time zone
-ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
-
-echo -ne "Setting Locale and Keymap"
-
-sed -i 's/^en_US.UTF-8 UTF-8/#en_US.UTF-8 UTF-8/' /etc/locale.gen
-sed -i 's/^#pt_BR.UTF-8 UTF-8/pt_BR.UTF-8 UTF-8/' /etc/locale.gen
-locale-gen
-timedatectl --no-ask-password set-ntp 1
-localectl --no-ask-password set-locale LANG="pt_BR.UTF-8" LC_TIME="pt_BR.UTF-8"
-# Set keymaps
-echo 'KEYMAP=br-abnt2
-XKBLAYOUT=br
-XKBMODEL=abnt2
-XKBOPTIONS=terminate:ctrl_alt_bksp' | tee /etc/vsconsole.conf >/dev/null
-localectl --no-ask-password set-x11-keymap br abnt2
-
 echo -ne "
 -------------------------------------------------------------------------
                     Enabling Essential Services
@@ -362,9 +358,12 @@ sed -i 's/^%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: A
 sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 
-echo "Grub"
+echo -ne "
+-------------------------------------------------------------------------
+                    Grub
+-------------------------------------------------------------------------
+"
 pacman -S grub efibootmgr --noconfirm --needed
-
 
 if [[ -d "/sys/firmware/efi" ]]; then
     #grub-install --target=x86_64-efi --efi-directory=/boot/efi
@@ -374,6 +373,12 @@ else
 fi
 
 grub-mkconfig -o /boot/grub/grub.cfg
+
+echo -ne "
+-------------------------------------------------------------------------
+                    Finish
+-------------------------------------------------------------------------
+"
 
 echo "check log for error"
 
@@ -385,4 +390,4 @@ umount -R /mnt
 reboot
 "
 
-echo "install default ?"
+echo "fix | install default ?"
