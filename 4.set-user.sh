@@ -190,4 +190,31 @@ else
 	echo "You are already a user proceed with aur installs"
 fi
 
-5.sh
+echo -ne "
+-------------------------------------------------------------------------
+                    Enabling Essential Services
+-------------------------------------------------------------------------
+"
+# ntpd -qg
+# systemctl enable ntpd.service
+# echo "  NTP enabled"
+systemctl disable dhcpcd.service
+echo "  DHCP disabled"
+systemctl stop dhcpcd.service
+echo "  DHCP stopped"
+systemctl enable NetworkManager.service
+echo "  NetworkManager enabled"
+
+echo -ne "
+-------------------------------------------------------------------------
+                    Cleaning
+-------------------------------------------------------------------------
+"
+# Remove no password sudo rights
+sed -i 's/^%wheel ALL=(ALL) NOPASSWD: ALL/# %wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
+sed -i 's/^%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/' /etc/sudoers
+# Add sudo rights
+sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
+sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
+
+5.grub.sh
