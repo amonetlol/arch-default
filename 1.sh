@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+!/usr/bin/env bash
 
 dir=$(pwd) 
 CONFIGS_DIR=$dir/configs/
@@ -8,49 +8,10 @@ if [ ! -f $CONFIG_FILE ]; then # check if file exists
 fi
 
 # Nome do arquivo de log
-log_file="0.log"
+log_file="1.log"
 
 # Redireciona a saída padrão e a saída de erro padrão para o arquivo de log
 exec > >(tee -a "$log_file") 2>&1
-
-root_check() {
-    if [[ "$(id -u)" != "0" ]]; then
-        echo -ne "ERROR! This script must be run under the 'root' user!\n"
-        exit 0
-    fi
-}
-
-docker_check() {
-    if awk -F/ '$2 == "docker"' /proc/self/cgroup | read -r; then
-        echo -ne "ERROR! Docker container is not supported (at the moment)\n"
-        exit 0
-    elif [[ -f /.dockerenv ]]; then
-        echo -ne "ERROR! Docker container is not supported (at the moment)\n"
-        exit 0
-    fi
-}
-
-arch_check() {
-    if [[ ! -e /etc/arch-release ]]; then
-        echo -ne "ERROR! This script must be run in Arch Linux!\n"
-        exit 0
-    fi
-}
-
-pacman_check() {
-    if [[ -f /var/lib/pacman/db.lck ]]; then
-        echo "ERROR! Pacman is blocked."
-        echo -ne "If not running remove /var/lib/pacman/db.lck.\n"
-        exit 0
-    fi
-}
-
-background_checks() {
-    root_check
-    arch_check
-    pacman_check
-    docker_check
-}
 
 set_option() {
     if grep -Eq "^${1}.*" $CONFIG_FILE; then # check if option exists
@@ -59,12 +20,6 @@ set_option() {
     echo "${1}=${2}" >>$CONFIG_FILE # add option
 }
 
-# Renders a text based list of options that can be selected by the
-# user using up, down and enter keys and returns the chosen option.
-#
-#   Arguments   : list of options, maximum of 256
-#                 "opt1" "opt2" ...
-#   Return value: selected index (0 for opt1, 1 for opt2 ...)
 select_option() {
 
     # little helpers for terminal print control and key input
@@ -169,71 +124,6 @@ select_option() {
     return $(( $active_col + $active_row * $colmax ))
 }
 
-# @description This function will handle file systems. At this movement we are handling only
-# btrfs and ext4. Others will be added in future.
-filesystem () {
-echo -ne "
-Please Select your file system for both boot and root
-"
-options=("ext4" "exit")
-select_option $? 1 "${options[@]}"
-
-case $? in
-0) set_option FS ext4;;
-1) exit ;;
-*) echo "Wrong option please select again"; filesystem;;
-esac
-}
-
-# @description Choose whether drive is SSD or not.
-drivessd () {
-echo -ne "
-Is this an ssd? yes/no:
-"
-
-options=("Yes" "No")
-select_option $? 1 "${options[@]}"
-
-case ${options[$?]} in
-    y|Y|yes|Yes|YES)
-    set_option MOUNT_OPTIONS "noatime,compress=zstd,ssd,commit=120";;
-    n|N|no|NO|No)
-    set_option MOUNT_OPTIONS "noatime,compress=zstd,commit=120";;
-    *) echo "Wrong option. Try again";drivessd;;
-esac
-}
-
-# @description Disk selection for drive to be used with installation.
-diskpart () {
-echo -ne "
-------------------------------------------------------------------------
-    THIS WILL FORMAT AND DELETE ALL DATA ON THE DISK
-    Please make sure you know what you are doing because
-    after formating your disk there is no way to get data back
-------------------------------------------------------------------------
-
-"
-
-PS3='
-Select the disk to install on: '
-options=($(lsblk -n --output TYPE,KNAME,SIZE | awk '$1=="disk"{print "/dev/"$2"|"$3}'))
-
-select_option $? 1 "${options[@]}"
-disk=${options[$?]%|*}
-
-echo -e "\n${disk%|*} selected \n"
-    set_option DISK ${disk%|*}
-
-drivessd
-}
-
-# Starting functions
-background_checks
-clear
-diskpart
-clear
-filesystem
-clear
 
 echo -ne "
 

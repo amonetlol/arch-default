@@ -8,7 +8,7 @@ if [ ! -f $CONFIG_FILE ]; then # check if file exists
 fi
 
 # Nome do arquivo de log
-log_file="1.log"
+log_file="2.log"
 
 # Redireciona a saída padrão e a saída de erro padrão para o arquivo de log
 exec > >(tee -a "$log_file") 2>&1
