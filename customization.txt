@@ -1,0 +1,30 @@
+# Theme
+whitesur-gtk-theme
+fluent-gtk-theme
+colloid-gtk-theme-git
+qogir-gtk-theme
+orchis-theme
+mojave-gtk-theme
+layan-gtk-theme-git
+catppuccin-gtk-theme-mocha
+catppuccin-gtk-theme-latte
+arc-gtk-theme
+
+# Icon
+whitesur-icon-theme
+colloid-icon-theme-git
+qogir-icon-theme
+mcmojave-circle-icon-theme
+
+# Cursor
+whitesur-cursor-theme-git
+fluent-cursor-theme-git
+colloid-cursors-git
+mcmojave-cursors
+layan-cursor-theme-git
+
+# Grub
+grub-theme-whitesur-whitesur-1080p-git
+
+# SDDM
+sddm-theme-sugar-candy-git
